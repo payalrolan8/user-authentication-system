@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const validator = require("validator");
 const app = express();
 const User = require("./User");
 const cors = require("cors");
@@ -25,11 +26,12 @@ async function main() {
 }
 app.post("/signup", async (req, res) => {
   try {
-
-
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
       return res.status(400).json({ message: "all fields are required" });
+    }
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: "Invalid Email format" });
     }
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -47,6 +49,9 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: "Invalid Email format" });
+    }
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "user not found" });
