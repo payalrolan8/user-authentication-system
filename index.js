@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const bcrypt=require("bcrypt");
 const app = express();
 const User = require("./User");
 const cors = require("cors");
@@ -33,7 +34,8 @@ app.post("/signup", async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: "email already registered" });
     }
-    const user = new User({ name, email, password });
+    const hashedPassword=await bcrypt.hash(password,10);
+    const user = new User({ name, email, password:hashedPassword });
     await user.save();
     res.status(201).json({ message: "Signup successful User registered" });
   } catch (err) {
@@ -48,7 +50,8 @@ app.post("/login", async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "user not found" });
     }
-    if (user.password !== password) {
+    const passwordMatch=await bcrypt.compare(password,user.password);
+    if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     res.status(200).json({ message: "login successful", user });
