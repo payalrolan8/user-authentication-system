@@ -9,6 +9,7 @@ const cors = require("cors");
 
 const app = express();
 const router = express.Router();
+const BASE_URL = process.env.FRONTEND_URL || "https://user-authentication-system-02.netlify.app";
 
 // ── User Schema ──
 let UserModel;
@@ -32,7 +33,7 @@ const connectDB = async () => {
 };
 
 // ── Middleware ──
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+app.use(cors({ origin: BASE_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -56,20 +57,20 @@ router.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
     if (!name || !email || !password)
-      return res.redirect("/signup.html?error=All fields are required");
+      return res.redirect(`${BASE_URL}/signup.html?error=All fields are required`);
     if (!validator.isEmail(email))
-      return res.redirect("/signup.html?error=Invalid email format");
+      return res.redirect(`${BASE_URL}/signup.html?error=Invalid email format`);
     if (password.length < 6)
-      return res.redirect("/signup.html?error=Password must be at least 6 characters");
+      return res.redirect(`${BASE_URL}/signup.html?error=Password must be at least 6 characters`);
     const existing = await User.findOne({ email });
     if (existing)
-      return res.redirect("/signup.html?error=Email already registered");
+      return res.redirect(`${BASE_URL}/signup.html?error=Email already registered`);
     const hashed = await bcrypt.hash(password, 10);
     await new User({ name, email, password: hashed }).save();
-    res.redirect("/login.html?success=Account created! Please login");
+    res.redirect(`${BASE_URL}/login.html?success=Account created! Please login`);
   } catch (err) {
     console.error(err);
-    res.redirect("/signup.html?error=Something went wrong");
+    res.redirect(`${BASE_URL}/signup.html?error=Something went wrong`);
   }
 });
 
@@ -80,26 +81,31 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!validator.isEmail(email))
-      return res.redirect("/login.html?error=Invalid email format");
+      return res.redirect(`${BASE_URL}/login.html?error=Invalid email format`);
     const user = await User.findOne({ email });
     if (!user)
-      return res.redirect("/login.html?error=User not found");
+      return res.redirect(`${BASE_URL}/login.html?error=User not found`);
     const match = await bcrypt.compare(password, user.password);
     if (!match)
-      return res.redirect("/login.html?error=Invalid credentials");
+      return res.redirect(`${BASE_URL}/login.html?error=Invalid credentials`);
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "none" });
-    res.redirect("/dashboard.html");
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      domain: ".netlify.app"
+    });
+    res.redirect(`${BASE_URL}/dashboard.html`);
   } catch (err) {
     console.error(err);
-    res.redirect("/login.html?error=Something went wrong");
+    res.redirect(`${BASE_URL}/login.html?error=Something went wrong`);
   }
 });
 
 // ── Logout ──
 router.post("/logout", (req, res) => {
-  res.clearCookie("token");
-  res.redirect("/login.html");
+  res.clearCookie("token", { domain: ".netlify.app" });
+  res.redirect(`${BASE_URL}/login.html`);
 });
 
 // ── Mount ──
