@@ -4,6 +4,11 @@
   publish = "public"
 
 [[redirects]]
+  from = "/"
+  to = "/signup.html"
+  status = 302
+
+[[redirects]]
   from = "/signup"
   to = "/.netlify/functions/api/signup"
   status = 200
