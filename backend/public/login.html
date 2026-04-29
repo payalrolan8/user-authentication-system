@@ -1,52 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <title>Login — DekNek 3D</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
             height: 100vh;
             background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
-            display: flex; justify-content: center; align-items: center; color: #eaeaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #eaeaea;
         }
+
         .container {
-            width: 360px; padding: 35px; border-radius: 16px;
-            background: rgba(20,20,35,0.85); box-shadow: 0 0 25px rgba(0,0,0,0.6);
-            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05);
+            width: 360px;
+            padding: 35px;
+            border-radius: 16px;
+            background: rgba(20, 20, 35, 0.85);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        h2 { text-align: center; margin-bottom: 25px; font-weight: 600; letter-spacing: 1px; }
-        .input-box { margin-bottom: 18px; }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .input-box {
+            margin-bottom: 18px;
+        }
+
         .input-box input {
-            width: 100%; padding: 12px; border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: #0f0f1a; color: #fff; font-size: 14px; transition: 0.3s;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #0f0f1a;
+            color: #fff;
+            font-size: 14px;
+            transition: 0.3s;
         }
-        .input-box input::placeholder { color: #777; }
-        .input-box input:focus { border-color: #7f5af0; box-shadow: 0 0 8px #7f5af0; outline: none; }
+
+        .input-box input::placeholder {
+            color: #777;
+        }
+
+        .input-box input:focus {
+            border-color: #7f5af0;
+            box-shadow: 0 0 8px #7f5af0;
+            outline: none;
+        }
+
         button {
-            width: 100%; padding: 12px; border-radius: 8px; border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
             background: linear-gradient(135deg, #7f5af0, #2cb67d);
-            color: white; font-size: 15px; cursor: pointer; transition: 0.3s; margin-top: 5px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 5px;
         }
-        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(127,90,240,0.5); }
-        .footer-text { text-align: center; margin-top: 15px; font-size: 13px; color: #aaa; }
-        .footer-text a { color: #7f5af0; text-decoration: none; }
-        .footer-text a:hover { text-decoration: underline; }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(127, 90, 240, 0.5);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .footer-text a {
+            color: #7f5af0;
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
         .error-msg {
-            background: rgba(255,80,80,0.15); border: 1px solid rgba(255,80,80,0.4);
-            color: #ff6b6b; padding: 10px 12px; border-radius: 8px;
-            font-size: 13px; margin-bottom: 15px; display: none;
+            background: rgba(255, 80, 80, 0.15);
+            border: 1px solid rgba(255, 80, 80, 0.4);
+            color: #ff6b6b;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
         }
+
         .success-msg {
-            background: rgba(44,182,125,0.15); border: 1px solid rgba(44,182,125,0.4);
-            color: #2cb67d; padding: 10px 12px; border-radius: 8px;
-            font-size: 13px; margin-bottom: 15px; display: none;
+            background: rgba(44, 182, 125, 0.15);
+            border: 1px solid rgba(44, 182, 125, 0.4);
+            color: #2cb67d;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Login</h2>
@@ -62,7 +138,12 @@
             <button type="submit">Login</button>
         </form>
         <div class="footer-text">
-            Don't have an account? <a href="/signup.html">Sign Up</a>
+            Don't have an account?
+            <form action="/signup.html" method="GET" style="display:inline">
+                <button type="submit"
+                    style="background:none;border:none;color:#7f5af0;cursor:pointer;font-size:13px;font-family:'Poppins',sans-serif;padding:0;">Sign
+                    Up</button>
+            </form>
         </div>
     </div>
     <script>
@@ -79,4 +160,5 @@
         }
     </script>
 </body>
+
 </html>
