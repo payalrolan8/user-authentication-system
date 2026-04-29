@@ -6,6 +6,7 @@
   from = "/"
   to = "/signup.html"
   status = 302
+  force = true
 
 [[redirects]]
   from = "/signup"
