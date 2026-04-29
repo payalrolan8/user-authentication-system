@@ -91,8 +91,7 @@ router.post("/login", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
-      domain: ".netlify.app"
+      sameSite: "none"
     });
     res.redirect(`${BASE_URL}/dashboard.html`);
   } catch (err) {
