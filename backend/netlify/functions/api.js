@@ -9,8 +9,7 @@ const cors = require("cors");
 
 const app = express();
 const router = express.Router();
-const BASE_URL = process.env.FRONTEND_URL || "https://user-authentication-system-02.netlify.app";
-
+const BASE_URL = process.env.FRONTEND_URL;
 // ── User Schema ──
 let UserModel;
 const getUserModel = () => {
