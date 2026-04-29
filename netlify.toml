@@ -11,18 +11,22 @@
   from = "/signup"
   to = "/.netlify/functions/api/signup"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/login"
   to = "/.netlify/functions/api/login"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/logout"
   to = "/.netlify/functions/api/logout"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
+  force = true
