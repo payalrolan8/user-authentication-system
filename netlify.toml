@@ -1,7 +1,6 @@
 [build]
-  base = "backend"
-  functions = "netlify/functions"
-  publish = "public"
+  functions = "backend/netlify/functions"
+  publish = "backend/public"
 
 [[redirects]]
   from = "/"
