@@ -6,25 +6,6 @@
   from = "/"
   to = "/signup.html"
   status = 302
-  force = true
-
-[[redirects]]
-  from = "/login.html"
-  to = "/login.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/signup.html"
-  to = "/signup.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/dashboard.html"
-  to = "/dashboard.html"
-  status = 200
-  force = true
 
 [[redirects]]
   from = "/signup"
