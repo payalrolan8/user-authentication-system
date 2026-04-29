@@ -1,14 +1,23 @@
+[build]
+  functions = "netlify/functions"
+  publish = "backend/public"
+
 [[redirects]]
   from = "/signup"
-  to = "/signup.html"
+  to = "/.netlify/functions/api/signup"
   status = 200
 
 [[redirects]]
   from = "/login"
-  to = "/login.html"
+  to = "/.netlify/functions/api/login"
   status = 200
 
 [[redirects]]
-  from = "/dashboard"
-  to = "/dashboard.html"
+  from = "/logout"
+  to = "/.netlify/functions/api/logout"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
   status = 200

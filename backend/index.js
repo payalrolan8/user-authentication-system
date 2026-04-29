@@ -8,26 +8,30 @@ const app = express();
 const User = require("./User");
 const cors = require("cors");
 const port = 3000;
-const cookieParser=require("cookie-parser");
-app.use(cors());
+const cookieParser = require("cookie-parser");
+const path = require("path");
+app.use(cors({
+  origin: "https://your-netlify-site.netlify.app",
+  credentials: true
+}));
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-app.use(express.static("."));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "..")));
 app.use(cookieParser());
-const authMiddleware=(req,res,next)=>{
-  const token=req.cookies.token;
-  if(!token) return res.redirect("/login.html");
-  try{
-    const decoded=jwt.verify(token,process.env.JWT_SECRET);
-    req.user=decoded;
+const authMiddleware = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) return res.redirect("/login.html");
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
     next();
-  }catch(err){
+  } catch (err) {
     res.clearCookie("token");
     res.redirect("/login.html");
   }
 };
-app.get("/dashboard.html",authMiddleware,(req,res)=>{
-  res.sendFile(__dirname+"/dashboard.html");
+app.get("/dashboard.html", authMiddleware, (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "/dashboard.html"));
 });
 app.get("/", (req, res) => {
   res.redirect("/signup.html");
@@ -52,7 +56,7 @@ app.post("/signup", async (req, res) => {
     if (!validator.isEmail(email)) {
       return res.redirect("/signup.html?error=Invalid email format");
     }
-    if(password.length<6){
+    if (password.length < 6) {
       return res.redirect("/signup.html?error=Password must be at least 6 characters");
     }
     const existingUser = await User.findOne({ email });
@@ -87,15 +91,20 @@ app.post("/login", async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
-    res.cookie("token",token,{httpOnly:true,maxAge:24*60*60*1000});
-    res.redirect("/dashboard.html");
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none"
+    });
+
+    res.redirect("https://wonderful-biscochitos-4eeead.netlify.app/dashboard.html");
   } catch (err) {
     console.log(err);
     res.redirect("/login.html?error=Something went wrong");
   }
 
 });
-app.post("/logout",(req,res)=>{
+app.post("/logout", (req, res) => {
   res.clearCookie("token");
   res.redirect("/login.html");
 })
