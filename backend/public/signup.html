@@ -72,8 +72,14 @@
         const params = new URLSearchParams(window.location.search);
         const errorMsg = document.getElementById('errorMsg');
         const successMsg = document.getElementById('successMsg');
-        if (params.get('error')) { errorMsg.textContent = params.get('error'); errorMsg.style.display = 'block'; }
-        if (params.get('success')) { successMsg.textContent = params.get('success'); successMsg.style.display = 'block'; }
+        if (params.get('error')) {
+            errorMsg.textContent = params.get('error');
+            errorMsg.style.display = 'block';
+        }
+        if (params.get('success')) {
+            successMsg.textContent = params.get('success');
+            successMsg.style.display = 'block';
+        }
     </script>
 </body>
 </html>

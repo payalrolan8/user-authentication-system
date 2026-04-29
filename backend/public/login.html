@@ -52,7 +52,7 @@
         <h2>Login</h2>
         <div class="success-msg" id="successMsg"></div>
         <div class="error-msg" id="errorMsg"></div>
-       <form action="/.netlify/functions/api/login" method="POST">
+        <form action="/.netlify/functions/api/login" method="POST">
             <div class="input-box">
                 <input type="email" name="email" placeholder="Email Address" required>
             </div>
@@ -69,8 +69,14 @@
         const params = new URLSearchParams(window.location.search);
         const errorMsg = document.getElementById('errorMsg');
         const successMsg = document.getElementById('successMsg');
-        if (params.get('error')) { errorMsg.textContent = params.get('error'); errorMsg.style.display = 'block'; }
-        if (params.get('success')) { successMsg.textContent = params.get('success'); successMsg.style.display = 'block'; }
+        if (params.get('error')) {
+            errorMsg.textContent = params.get('error');
+            errorMsg.style.display = 'block';
+        }
+        if (params.get('success')) {
+            successMsg.textContent = params.get('success');
+            successMsg.style.display = 'block';
+        }
     </script>
 </body>
 </html>
