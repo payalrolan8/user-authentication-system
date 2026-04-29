@@ -1,6 +1,7 @@
 [build]
+  base = "backend"
   functions = "netlify/functions"
-  publish = "backend/public"
+  publish = "public"
 
 [[redirects]]
   from = "/signup"
