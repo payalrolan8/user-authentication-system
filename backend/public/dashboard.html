@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DekNek 3D — Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0f;
+            color: #f0f0f5;
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-cube {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #7f5af0, #2cb67d);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .logo-text {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-text span {
+            color: #7f5af0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .plan-badge {
+            background: linear-gradient(135deg, rgba(127, 90, 240, 0.15), rgba(44, 182, 125, 0.15));
+            border: 1px solid rgba(127, 90, 240, 0.3);
+            color: #c4b0ff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            color: #fff;
+        }
+
+        /* HERO BANNER */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(127, 90, 240, 0.08) 0%, rgba(44, 182, 125, 0.05) 100%);
+            border-bottom: 1px solid rgba(127, 90, 240, 0.1);
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '◆';
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%) rotate(15deg);
+            font-size: 160px;
+            color: rgba(127, 90, 240, 0.05);
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(44, 182, 125, 0.1);
+            border: 1px solid rgba(44, 182, 125, 0.25);
+            color: #2cb67d;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .hero-banner h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .hero-banner h1 span {
+            background: linear-gradient(135deg, #7f5af0, #2cb67d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-banner p {
+            color: #666680;
+            font-size: 15px;
+            max-width: 420px;
+            line-height: 1.6;
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 40px 60px;
+        }
+
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: #111118;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 20px;
+            transition: all 0.25s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(127, 90, 240, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .stat-icon {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 30px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+
+        .stat-lbl {
+            font-size: 12px;
+            color: #555570;
+        }
+
+        /* SECTION TITLE */
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            margin-bottom: 16px;
+        }
+
+        /* MODELS GRID */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .model-card {
+            background: #111118;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(127, 90, 240, 0.06), rgba(44, 182, 125, 0.04));
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .model-card:hover {
+            border-color: rgba(127, 90, 240, 0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .model-card:hover::before {
+            opacity: 1;
+        }
+
+        .model-emoji {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .model-name {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .model-tag {
+            font-size: 10px;
+            color: #7f5af0;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* TWO COL */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        /* PLAN CARD */
+        .plan-card {
+            background: #111118;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 28px;
+        }
+
+        .plan-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .plan-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .plan-price {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #7f5af0, #2cb67d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .plan-period {
+            font-size: 12px;
+            color: #555570;
+            margin-top: 2px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 22px;
+        }
+
+        .plan-features li {
+            font-size: 13px;
+            color: #aaaacc;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: #2cb67d;
+            font-weight: 700;
+        }
+
+        .upgrade-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #7f5af0, #2cb67d);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: opacity 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .upgrade-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* QUICK ACTIONS */
+        .actions-panel {
+            background: #111118;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 28px;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid transparent;
+            margin-bottom: 8px;
+        }
+
+        .action-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .action-item:hover {
+            background: rgba(127, 90, 240, 0.07);
+            border-color: rgba(127, 90, 240, 0.2);
+        }
+
+        .action-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(127, 90, 240, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .action-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .action-sub {
+            font-size: 12px;
+            color: #555570;
+            margin-top: 2px;
+        }
+
+        .action-arrow {
+            margin-left: auto;
+            color: #555570;
+            font-size: 16px;
+        }
+
+        /* USES STRIP */
+        .uses-strip {
+            background: #111118;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 24px 28px;
+        }
+
+        .uses-title {
+            font-size: 12px;
+            color: #555570;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .uses-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .use-tag {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            color: #aaaacc;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 20px;
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .use-tag:hover {
+            background: rgba(127, 90, 240, 0.1);
+            border-color: rgba(127, 90, 240, 0.3);
+            color: #c4b0ff;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+            color: #333350;
+        }
+
+        footer span {
+            color: #7f5af0;
+        }
+
+        /* ANIM */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-banner {
+            animation: fadeUp 0.4s ease both;
+        }
+
+        .stats {
+            animation: fadeUp 0.4s ease 0.08s both;
+        }
+
+        .models-grid {
+            animation: fadeUp 0.4s ease 0.15s both;
+        }
+
+        .two-col {
+            animation: fadeUp 0.4s ease 0.22s both;
+        }
+
+        .uses-strip {
+            animation: fadeUp 0.4s ease 0.28s both;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 14px 20px;
+            }
+
+            .hero-banner {
+                padding: 36px 20px;
+            }
+
+            .container {
+                padding: 28px 20px 50px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .models-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-logo">
+            <div class="logo-cube">◆</div>
+            <div class="logo-text">DekNek <span>3D</span></div>
+        </div>
+        <div class="nav-right">
+            <span class="plan-badge">✦ Pro Plan</span>
+            <form action="/logout" method="POST" class="logout-form">
+                <button type="submit" class="logout-btn">Sign Out</button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero-banner">
+        <div class="hero-tag">● Logged In</div>
+        <h1>Welcome to<br><span>Your Studio</span></h1>
+        <p>Generate unlimited 3D models for games, animations, blender, VFX and more. Your creative workspace is ready.
+        </p>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="container">
+
+        <!-- STATS -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">🧊</div>
+                <div class="stat-num">∞</div>
+                <div class="stat-lbl">Models Available</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⬇️</div>
+                <div class="stat-num">∞</div>
+                <div class="stat-lbl">Downloads Left</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-num">∞</div>
+                <div class="stat-lbl">Creations Left</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-num" id="daysLeft">—</div>
+                <div class="stat-lbl">Days Remaining</div>
+            </div>
+        </div>
+
+        <!-- MODELS -->
+        <div class="section-title">Featured 3D Models</div>
+        <div class="models-grid">
+            <div class="model-card">
+                <span class="model-emoji">🦅</span>
+                <div class="model-name">Emerald Pegasus</div>
+                <div class="model-tag">DKN</div>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">👾</span>
+                <div class="model-name">Monster</div>
+                <div class="model-tag">DKN</div>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">🚗</span>
+                <div class="model-name">Car</div>
+                <div class="model-tag">DKN</div>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">🐕</span>
+                <div class="model-name">Dog</div>
+                <div class="model-tag">DKN</div>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">🗿</span>
+                <div class="model-name">Giant</div>
+                <div class="model-tag">DKN</div>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">🦸</span>
+                <div class="model-name">Superhero</div>
+                <div class="model-tag">DKN</div>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">🐅</span>
+                <div class="model-name">Tiger</div>
+                <div class="model-tag">DKN</div>
+            </div>
+            <div class="model-card">
+                <span class="model-emoji">⚔️</span>
+                <div class="model-name">Armor</div>
+                <div class="model-tag">DKN</div>
+            </div>
+        </div>
+
+        <!-- TWO COL -->
+        <div class="two-col">
+
+            <!-- PLAN -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div>
+                        <div class="plan-name">Pro Plan</div>
+                        <div class="plan-period">6 Months Access</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="plan-price">₹249</div>
+                        <div class="plan-period">Active</div>
+                    </div>
+                </div>
+                <ul class="plan-features">
+                    <li>Unlimited Downloads</li>
+                    <li>Unlimited Creations</li>
+                    <li>Text / Image to 3D</li>
+                    <li>Community Access</li>
+                </ul>
+                <button class="upgrade-btn" onclick="window.location.href='https://www.deknek3d.in/#pricing'">Upgrade to
+                    Studio Plan →</button>
+            </div>
+
+            <!-- QUICK ACTIONS -->
+            <div class="actions-panel">
+                <div class="section-title" style="margin-bottom:20px">Quick Actions</div>
+                <a href="https://www.deknek3d.in/rodin" class="action-item">
+                    <div class="action-icon">🧊</div>
+                    <div>
+                        <div class="action-title">Text / Image to 3D</div>
+                        <div class="action-sub">Generate a new 3D model</div>
+                    </div>
+                    <span class="action-arrow">→</span>
+                </a>
+                <a href="https://www.deknek3d.in/community" class="action-item">
+                    <div class="action-icon">🌐</div>
+                    <div>
+                        <div class="action-title">Community Models</div>
+                        <div class="action-sub">Browse all DKN models</div>
+                    </div>
+                    <span class="action-arrow">→</span>
+                </a>
+                <a href="https://www.deknek3d.in/convert" class="action-item">
+                    <div class="action-icon">🔄</div>
+                    <div>
+                        <div class="action-title">Convert Model</div>
+                        <div class="action-sub">Change file format</div>
+                    </div>
+                    <span class="action-arrow">→</span>
+                </a>
+                <a href="https://www.deknek3d.in/edit" class="action-item">
+                    <div class="action-icon">✏️</div>
+                    <div>
+                        <div class="action-title">Edit Model</div>
+                        <div class="action-sub">Modify existing 3D files</div>
+                    </div>
+                    <span class="action-arrow">→</span>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- USES -->
+        <div class="uses-strip">
+            <div class="uses-title">Use your models in</div>
+            <div class="uses-tags">
+                <span class="use-tag">🎮 Game Dev</span>
+                <span class="use-tag">🎬 Animation</span>
+                <span class="use-tag">🌀 Blender</span>
+                <span class="use-tag">✨ VFX</span>
+                <span class="use-tag">🛒 E-commerce</span>
+                <span class="use-tag">🥽 AR / VR</span>
+                <span class="use-tag">🏗️ Architecture</span>
+                <span class="use-tag">🎓 Education</span>
+                <span class="use-tag">🏥 Medical</span>
+                <span class="use-tag">📱 Marketing</span>
+                <span class="use-tag">🤖 AI</span>
+                <span class="use-tag">🏠 Real Estate</span>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        © DekNek 3D &nbsp;·&nbsp;
+    </footer>
+
+    <script>
+        const planEnd = new Date();
+        planEnd.setMonth(planEnd.getMonth() + 6);
+        const diff = Math.ceil((planEnd - new Date()) / (1000 * 60 * 60 * 24));
+        document.getElementById('daysLeft').textContent = diff;
+    </script>
+
+</body>
+
+</html>
