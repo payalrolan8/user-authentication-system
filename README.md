@@ -1,6 +1,6 @@
 # User Authentication System
 
-A full stack authentication system built with Node.js, Express, MongoDB Atlas, and deployed on Netlify using serverless functions. Built as part of an internship assignment.
+A full stack authentication system built with Node.js, Express, MongoDB Atlas, and deployed on Netlify using serverless functions.
 
 ## Live Demo
 https://user-authentication-system-02.netlify.app/signup.html
