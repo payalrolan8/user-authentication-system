@@ -11,10 +11,6 @@ https://user-authentication-system-02.netlify.app/signup.html?
 
 <img width="567" height="477" alt="Screenshot 2026-04-30 201455" src="https://github.com/user-attachments/assets/10910363-9b74-4fc2-af1d-fbee3b95ce53" />
 
-<img width="631" height="694" alt="Screenshot 2026-04-30 201524" src="https://github.com/user-attachments/assets/5e748978-60b4-479b-861d-d6c0325d318f" />
-
-<img width="1621" height="433" alt="Screenshot 2026-04-30 201626" src="https://github.com/user-attachments/assets/58bdd381-df08-484d-9bc5-f1155f553109" />
-
 <img width="1893" height="714" alt="Screenshot 2026-04-30 201619" src="https://github.com/user-attachments/assets/905df201-ef56-48ac-8d09-003dbf25a2ab" />
 
 <img width="1621" height="433" alt="Screenshot 2026-04-30 201626" src="https://github.com/user-attachments/assets/3f769a8c-0b12-40e1-b66b-e5887f23d96c" />
